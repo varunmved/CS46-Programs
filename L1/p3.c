@@ -10,7 +10,7 @@ int main()
 	double w = 0;
 
 	printf("Enter the length, width, and height of a package: ");
-	scanf("%lf %lf %lf",l,w,h);
+	scanf("%lf %lf %lf",&l,&w,&h);
 	
 	double result = (l + 2*h + 2*w);
 	printf("%lf\n", result);

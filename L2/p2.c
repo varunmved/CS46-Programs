@@ -8,7 +8,7 @@ int get_start()
 {
 	int startNum;
 	printf("Enter the starting number: ");
-	scanf("%d",startNum);
+	scanf("%d",&startNum);
 	if(startNum <= 0)
 		printf("The number should be a positive integer.\n");
 	else return startNum;

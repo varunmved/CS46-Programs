@@ -8,7 +8,7 @@ int get_length()
 {
 	int arrowLength;
 	printf("How long of an arrow? ");
-	scanf("%d",arrowLength);
+	scanf("%d",&arrowLength);
 
 	return arrowLength;
 }
