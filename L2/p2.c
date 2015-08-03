@@ -9,9 +9,17 @@ int get_start()
 	int startNum;
 	printf("Enter the starting number: ");
 	scanf("%d",&startNum);
+	
 	if(startNum <= 0)
+	{
 		printf("The number should be a positive integer.\n");
-	else return startNum;
+	}
+
+	else
+	{
+
+		return startNum;
+	}
 }
 
 void collatz(int startNum)
@@ -37,7 +45,7 @@ void collatz(int startNum)
 
 		count++;
 	}
-	printf("Length: %d", count);
+	printf("\nLength: %d", count);
 }
 
 int main()

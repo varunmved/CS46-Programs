@@ -13,8 +13,17 @@ int main()
 	printf("Input the second fraction: ");
 	scanf("%d %*c %d",&inNum2,&inDom2);
 
-	outDom=inDom2*inDom1;
-	outNum=inNum1*inDom2 + inNum2*inDom1;
+	if(inDom1==inDom2)
+	{
+		outNum=inNum2+inNum1;
+		outDom=inDom1;
+	}
+	else
+	{
+		outDom=inDom2*inDom1;
+		outNum=inNum1*inDom2 + inNum2*inDom1;
+	}
+	
 
 	printf("The sum is: %d/%d",outNum,outDom);
 

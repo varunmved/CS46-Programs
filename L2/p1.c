@@ -15,10 +15,11 @@ int get_length()
 
 void drawArrow(int arrowLength)
 {
-	for(int i =1; i < arrowLength; i++)
+	for(int i =0; i < arrowLength; i++)
 	{
 		printf("-");
 	}
+	
 	printf(">");
 
 }

@@ -6,9 +6,9 @@ char* strcaps(char* str1, int str2)
 {
 	for(int i =0; i < str2; i++)
 	{
-		if(islower(i))
+		if(islower(str1[i]))
 		{
-			toupper(i);
+			str1[i] = toupper(str1[i]);
 		}
 	}
 	return str1;

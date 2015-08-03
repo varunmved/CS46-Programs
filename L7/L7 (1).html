@@ -1,0 +1,34 @@
+<p>In this assignment you will try your hand at cracking passwords. You will be able to generate a file containing cryptographic MD5 hashes, just the way they are stored in a typical password database. Your task is to write a program to crack the passwords by trying each of them against a dictionary of plaintext passwords.</p>
+<h2>Obtain the starter files</h2>
+<p>First, update your appliance using the command: <strong>appliance upgrade all</strong></p>
+<p>Then fork and clone my BitBucket repository.</p>
+<ol>
+<li>Open a web browser and go to <a href="https://bitbucket.org/profbbrown/crack2">https://bitbucket.org/profbbrown/crack2</a></li>
+<li>Fork the repository on BitBucket.</li>
+<li>Clone the repository into your VM&nbsp;using a command like <strong>git&nbsp;clone https://<em>username</em>@bitbucket.org/<em>username</em>/crack2</strong>&nbsp;(replace "username" with your own username in both places).</li>
+</ol>
+<h2>Create the hash file</h2>
+<p>Run this command: <strong>make hashes</strong></p>
+<p>This will create two files: <strong>hashes.txt</strong> and <strong>passwords.txt</strong>. The former contains the MD5 hashes; the latter contains their plaintext equivalents. The plaintext passwords are selected randomly from the rockyou100.txt file.</p>
+<p>If you wish, you can change the number of hashes generated and the source file at the top of the Makefile. For example, change NUM_HASHES to 50 and ROCKYOU to rockyou2000.txt. Then run <strong>make hashes</strong> again.</p>
+<h2>Modify the Makefile</h2>
+<p>The Makefile provided is mostly complete. You need to insert the recipes to build the crack.o and crack programs.</p>
+<h2>Build the template programs</h2>
+<p>Run this command: <strong>make</strong></p>
+<p>This will compile the crack.c and md5crypt.c files together and make a program called <strong>crack</strong>.</p>
+<p>Run <strong>make test</strong> to run the crack program against the hashes.txt and rockyou100.txt files.</p>
+<h2>Edit the C files</h2>
+<p>All the work you need to do is in the <strong>crack.c</strong> file. You do not need to modify md5.c.</p>
+<p>The code in generously commented with descriptions of what needs to be done to make a single-threaded password cracker. Essentially, they are:</p>
+<ul>
+<li>Write the readfile function that reads in a file (one word per line) and returns the address of the array of strings.</li>
+<li>Modify tryguess() to hash a plaintext guess and compare it to another hash. Return 0 if they don't match; non-zero if they do match.</li>
+<li>Modify main() to try each of the hashes against the dictionary of plaintext guesses. You will need two nested loops: one for the array of hashes, the other for the array of dictionary words. Within the loops, call tryguess to see if the hash matches the dictionary word.&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
+<h2>What to Turn In</h2>
+<p>Push your version of the crack program to BitBucket.</p>
+<p>Scoring is as follows:</p>
+<p>18 points: Got the program working as described</p>
+<p>2 points: Made some optimization changes that allows the crack program to work even faster than simply making it multi-threaded. We talked in class about ideas for making the program "do less work per iteration."</p>
+<p>&nbsp;</p>

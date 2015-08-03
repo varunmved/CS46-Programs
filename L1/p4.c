@@ -10,7 +10,7 @@ int main()
 	scanf("%d",&arrowLength);
 	printf("\n");
 
-	for(int i =1; i < arrowLength; i++)
+	for(int i =0; i < arrowLength; i++)
 	{
 		printf("-");
 	}
