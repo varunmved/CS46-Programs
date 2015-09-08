@@ -37,14 +37,16 @@ int main()
 {
   FILE* stream = fopen("homes200.csv", "r");
   FILE* smallStream = fopen("small.txt","w");
-  FILE* medStream = fopen("med.txt","w");
-  FILE* largeStream = fopen("large.txt","w");
 
+    //creating a "fake hashtable" with an array
+    //allows me to map each zip code to an index on the array
+  int hashTableArray[10000] = 0;
   char line[1024];
   char zipStr[10] ="";
   char addStr[50] ="";
   char col[] = " : ";
   int sqft;
+  int i =0;
 
   while (fgets(line, 1024, stream))
   {
@@ -52,42 +54,10 @@ int main()
     char* tmp2 = strdup(line);
 
     strcpy(zipStr,getfield(tmp, 1));
-    strcpy(addStr,getfield(tmp2, 3));
     zip = atoi(zipStr);
-    
 
+    hashTableArray[zip] = i++;
 
-    //large
-    if (sqft > 2000)
-    {
-      fprintf(largeStream,"%s",addStr);
-      fprintf(largeStream,"%s",col);
-      fprintf(largeStream,"%s\n",sqftStr);
-
-      free(tmp);
-      free(tmp2);
-    }
-    //medium
-    else if (sqft < 2000 && sqft > 1000)
-    {
-      fprintf(medStream,"%s",addStr);
-      fprintf(medStream,"%s",col);
-      fprintf(medStream,"%s\n",sqftStr);
-
-      free(tmp);
-      free(tmp2);
-    }
-    //small
-    else
-    {
-      fprintf(smallStream,"%s",addStr);
-      fprintf(smallStream,"%s",col);
-      fprintf(smallStream,"%s\n",sqftStr);
-
-      free(tmp);
-      free(tmp2);
-
-    }
   }
 
 }
