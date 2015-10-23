@@ -55,6 +55,7 @@ int main()
 
     strcpy(zipStr,getfield(tmp, 1));
     strcpy(addStr,getfield(tmp3, 3));
+    strcat(addStr,"\n");
     
     int zip = atoi(zipStr);
     char* zipStr2 = strcat(zipStr,".txt");
