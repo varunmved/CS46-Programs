@@ -36,11 +36,10 @@ const char* getfield(char* line, int num)
 int main()
 {
   FILE* stream = fopen("homes200.csv", "r");
-  FILE* smallStream = fopen("small.txt","w");
+  //FILE* smallStream = fopen("smallWrong.txt","w");
 
     //creating a "fake hashtable" with an array
     //allows me to map each zip code to an index on the array
-  int hashTableArray[10000] = 0;
   char line[1024];
   char zipStr[10] ="";
   char addStr[50] ="";
@@ -52,11 +51,15 @@ int main()
   {
     char* tmp = strdup(line);
     char* tmp2 = strdup(line);
+    char* tmp3 = strdup(line);
 
     strcpy(zipStr,getfield(tmp, 1));
-    zip = atoi(zipStr);
-
-    hashTableArray[zip] = i++;
+    strcpy(addStr,getfield(tmp3, 3));
+    
+    int zip = atoi(zipStr);
+    char* zipStr2 = strcat(zipStr,".txt");
+    FILE* smallStream = fopen(zipStr2,"a");
+    fprintf(smallStream,"%s",addStr);
 
   }
 
