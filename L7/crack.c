@@ -20,11 +20,12 @@ int tryguess(char *hash, char *guess)
 // Read in a file and return the array of strings.
 // Use the technique we showed in class to expand the
 // array as you go.
+/*
 char **readfile(char *filename)
 {
     return NULL;
 }
-
+*/
 FILE *openfile(char *fname);
 char **readfile(FILE *f, int *pNumLines);
 char **storeHashes(char **lines);
@@ -34,10 +35,9 @@ int numHashes;
  
  int main(int argc, char *argv[])
  {
-     }
  
      // Read the hash file into an array of strings
-    char **hashes = readfile("hashes.txt");
+    //char **hashes = readfile("hashes.txt");
     FILE *hf, *df;
     char **dictHashes;
 	
@@ -46,7 +46,7 @@ int numHashes;
     fclose(hf);
  
      // Read the dictionary file into an array of strings
-    char **dict = readfile("passwords.txt");
+    //char **dict = readfile("passwords.txt");
 
     df = openfile(argv[2]);
     char **dict = readfile(df, &numLines);
@@ -92,7 +92,8 @@ int numHashes;
     free(hashes);
     free(dict);
     free(dictHashes);
-}
+ 
+ }
 
 FILE *openfile(char *fname)
 {
@@ -117,8 +118,10 @@ char **readfile(FILE *f, int *pNumLines)
     int i = 0;
     while(fscanf(f, "%s", line) != EOF)
     {
-        arr[i] = malloc((strlen(line)1) * sizeof(char));
+        arr[i] = malloc((strlen(line)) * sizeof(char));
         strcpy(arr[i], line);
         i;
-        if (i == arrlen)
+        //if (i == arrlen)
+    }
+}
 

@@ -1,0 +1,15 @@
+Varun,
+
+I’ve looked through your projects. I’ve found some issues that need addressing:
+
+L7/crack.c appears to be incomplete. The readfile function at the bottom isn’t finished.
+
+L5/zips.c should write out one file per zip code. Your program just writes to a file called small.txt. In each file there should be the addresses of all the homes in that particular zip code. You should end up with about 20 or so zip code files.
+
+It looks like a lot of your programs are actually C++, since you make use of syntax like “new” and function overloading.
+
+L4/strings.s: the trim and trimall functions need to walk to the end of the strings, then walk back to trim off the newlines and/or whitespace.
+
+There are other problems here and there.
+
+Overall, it looks like you’ve got the syntax of C down pretty good, but writing programs that meet specification is where you need some work. Would you like to fix up those program and proceed from there?

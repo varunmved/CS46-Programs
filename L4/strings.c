@@ -3,6 +3,31 @@
 
 #include <stdio.h>
 
+int length(char *in)
+{
+    int count = 0;
+    int i =0;
+    while(in[i]!= '\0')
+    {
+        i++;
+        count++;
+    }
+    return count;
+}
+/*
+char* newS(char *input)
+{
+    int size = length(input);
+    char newArr[size]; 
+    for (int i =0; i < size; ++i)
+    {
+        newArr[i]= input[i];
+    }
+
+    return newArr;
+}
+*/
+/*
 void concat(char *A, char *B)
 {
 	int h = 0;
@@ -20,8 +45,8 @@ void concat(char *A, char *B)
 		k++;
 	}
 
-	char *C = new char[k];
-
+	//char *C = newS(char[k] C);
+    char *C[k+1];
 	for (int i = 0; i < k; ++i)
 	{
 		C[i] = A[i];
@@ -29,8 +54,8 @@ void concat(char *A, char *B)
 
 	int length = j + k;
 
-	A = new char[length];
-
+	//char *A = newS(char[length] A);
+    char *A[k+1];
 	for (int i = 0; i < length; ++i)
 	{
 		A[i] = C[i];
@@ -42,7 +67,7 @@ void concat(char *A, char *B)
 	}
 	
 }
-
+*/
 int stringPosition(char *A, char B)
 {
 	int i = 0;
@@ -58,7 +83,7 @@ int stringPosition(char *A, char B)
 	}
 	return -1;
 }
-
+/*
 int length(char *A)
 {
 	int i = 0;
@@ -79,7 +104,7 @@ int length(char *A)
 	A[0] = j;
 	return A[0];
 }
-
+*/
 void copy(char *dest, char *source)
 {
 	int i = 0;
@@ -108,26 +133,37 @@ int stringCompare(char *str1, char *str2)
 void trim(char *s)
 {
 	int max = length(s);
-	for(int i = max; i < 0; i--)
+    //printf(max,"%d");
+        
+    for(int i = max; i>=0; i--)
 	{
 		if(s[i]=='\n')
 		{
 			s[i] = '\0';
 		}
-		else break;
+	
 	}
+    
+    /*
+    for(int i = max; i > 0; --i)
+    {
+        
+    }
+    */
+
+    //printf(&s[max], "%c");
 }
 
 void trimall(char *s)
 {
 	int max = length(s);
 
-	for(int i = max; i < 0; i--)
+	for(int i = max; i <= 0; i--)
 	{
-		if( s[max] == '\t' ||
-			s[max] == '\n' ||
-			s[max] == '\r' ||
-			s[max] == ' '
+		if( s[i] == '\t' ||
+			s[i] == '\n' ||
+			s[i] == '\r' ||
+			s[i] == ' '
 		   )
 			{
 				s[i] = '\0';
@@ -137,9 +173,10 @@ void trimall(char *s)
 	}
 }
 
-
-
 int main()
 {
-	
+    char *s = " hello ";
+    trim(s);
+    printf(s,"%s");
+
 }
