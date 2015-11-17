@@ -1,73 +1,57 @@
-//Varun Ved
 //strings.c
-
+#include <stdlib.h>
 #include <stdio.h>
 
 int length(char *in)
 {
-    int count = 0;
     int i =0;
     while(in[i]!= '\0')
     {
         i++;
-        count++;
     }
-    return count;
+    return i;
 }
-/*
+
 char* newS(char *input)
 {
     int size = length(input);
-    char newArr[size]; 
+    char *newArr = malloc( sizeof(char) * ( size + 1 ) );
     for (int i =0; i < size; ++i)
     {
         newArr[i]= input[i];
     }
-
     return newArr;
 }
-*/
-/*
-void concat(char *A, char *B)
+char * concat(char *dest, char *source)
 {
-	int h = 0;
-	int a = 0;
-	int j = 0;
-	int k = 0; 
-	while (B[h] >= 32)
-	{
-		h++;
-		j++;
-	}
-	while (A[a] >=32)
-	{
-		a++;
-		k++;
-	}
+    int size = 0;
+    int sizeA = length(dest);
+    int sizeB = length(source);
+    
+    size = sizeA+sizeB;
+    
+    char *j = malloc( sizeof(char) * ( size + 1 ) );
+    
+    for(int i = 0; i <sizeA; i++)
+    {
+        j[i] = dest[i];
+    }
+    
+    dest = malloc( sizeof(char) * ( size + 1 ) );
+    
+    for(int i =0; i < sizeA; i++)
+    {
+        dest[i] = j[i];
+    }
+    
+    for(int i = 0; i <sizeB; i++)
+    {
+        dest[sizeA + i] = source[i];
+    }
 
-	//char *C = newS(char[k] C);
-    char *C[k+1];
-	for (int i = 0; i < k; ++i)
-	{
-		C[i] = A[i];
-	}
-
-	int length = j + k;
-
-	//char *A = newS(char[length] A);
-    char *A[k+1];
-	for (int i = 0; i < length; ++i)
-	{
-		A[i] = C[i];
-	}
-	
-	for (int i = 0; i < j; ++i)
-	{
-		A[i + k] = B[i];
-	}
-	
+    return dest;
 }
-*/
+
 int stringPosition(char *A, char B)
 {
 	int i = 0;
@@ -130,53 +114,80 @@ int stringCompare(char *str1, char *str2)
 	return same;
 }
 
+char * shiftIt(char * s)
+{
+    int size = length(s);
+    char *j = malloc( sizeof(char) * ( size + 1 ) );
+    
+    for(int i=0; i < size; ++i)
+    {
+        j[i] = s[i+1];
+        /*
+        printf("%c",j[i]);
+        printf("\n");
+        
+        printf("%c",s[i]);
+        printf("\n");
+        */
+    }
+    //printf("%s",j);
+    //printf("%s",s);
+    
+    return j;
+}
+
 void trim(char *s)
 {
 	int max = length(s);
     //printf(max,"%d");
         
-    for(int i = max; i>=0; i--)
-	{
-		if(s[i]=='\n')
+	 if(s[max]=='\n')
 		{
-			s[i] = '\0';
+			s[max] = '\0';
 		}
-	
-	}
-    
-    /*
-    for(int i = max; i > 0; --i)
-    {
-        
-    }
-    */
 
-    //printf(&s[max], "%c");
+	 if(s[0]=='\n')
+     {  
+        s = shiftIt(s);
+     }
+
+
 }
+
 
 void trimall(char *s)
 {
-	int max = length(s);
 
-	for(int i = max; i <= 0; i--)
-	{
-		if( s[i] == '\t' ||
-			s[i] == '\n' ||
-			s[i] == '\r' ||
-			s[i] == ' '
-		   )
+    int max = length(s);
+    //printf(max,"%d"); 
+    //int max = 0;
+		if( s[max] == '\t' ||
+			s[max] == '\n' ||
+			s[max] == '\r' ||
+			s[max] == ' '
+		)
 			{
-				s[i] = '\0';
+				s[max] = '\0';
+
 			}
-		else 
-			break;
-	}
+
+        if( s[0] == '\t' ||
+			s[0] == '\n' ||
+			s[0] == '\r' ||
+			s[0] == ' '
+		)
+			{
+                s = shiftIt(s);
+			}
 }
+
 
 int main()
 {
-    char *s = " hello ";
-    trim(s);
-    printf(s,"%s");
+    char *s = "source";
+    char *d = "dest";
+    d = concat(d,s);
+    printf(d,"%s");
+
 
 }
