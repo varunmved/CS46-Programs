@@ -1,127 +1,149 @@
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
- #include "md5.h"
- 
- const int PASS_LEN=20;        // Maximum any password can be
- const int HASH_LEN=33;        // Length of MD5 hash strings
- 
+#include "md5.h"
+
+const int PASS_LEN=20;        // Maximum any password can be
+const int HASH_LEN=33;        // Length of MD5 hash strings
+
+int hashRows;
+int passRows;
+
 // Given a hash and a plaintext guess, return 1 if
 // the hash of the guess matches the given hash.
 // That is, return 1 if the guess is correct.
+
+/*
+ * @param char*, char*
+ * @returns int
+ */
 int tryguess(char *hash, char *guess)
 {
     // Hash the guess using MD5
+    char *guessedHash = md5(guess, strlen(guess));
+
     // Compare the two hashes
+    if (strcmp(guessedHash, hash) == 0)
+    {
+        free(guessedHash);
+        return 1;
+    }
     // Free any malloc'd memory
+    free(guessedHash);
     return 0;
 }
-// Read in a file and return the array of strings.
+
+// TODO
+// Read in the hash file and return the array of strings.
 // Use the technique we showed in class to expand the
 // array as you go.
-/*
-char **readfile(char *filename)
-{
-    return NULL;
-}
-*/
-FILE *openfile(char *fname);
-char **readfile(FILE *f, int *pNumLines);
-char **storeHashes(char **lines);
-int tryguess(char *hash, char *guess);
-int numLines;
-int numHashes;
- 
- int main(int argc, char *argv[])
- {
- 
-     // Read the hash file into an array of strings
-    //char **hashes = readfile("hashes.txt");
-    FILE *hf, *df;
-    char **dictHashes;
-	
-	hf = openfile(argv[1]);
-    char **hashes = readfile(hf, &numHashes);
-    fclose(hf);
- 
-     // Read the dictionary file into an array of strings
-    //char **dict = readfile("passwords.txt");
 
-    df = openfile(argv[2]);
-    char **dict = readfile(df, &numLines);
-    fclose(df);
+/*
+ * @param char *
+ * @returns char **
+ */
+char **readFile(char *filename)
+{
+    FILE *fp = fopen(filename, "r");
+    int size = 50;
+    char stringArr[40];
+    char **passwords = (char**)malloc(size * sizeof(char *));
+    int i = 0;
+
+    if(!fp)
+    {
+        printf("Filename %s cannot be open for reading\n", filename);
+        exit(1);
+    }
+
+    while(fscanf(fp, "%s\n", stringArr) != EOF)
+    {
+       if (i == size)
+       {
+           size = size + 10;
+           char **biggerArr = (char **)realloc(passwords, size * sizeof(char *));
+           if (biggerArr != NULL) 
+           {
+                passwords = biggerArr;
+           }
+           else
+           {
+               printf("Realloc failed with exit code: \n");
+               exit(1);
+           }
+       }
+       char *newStringArr = (char *)malloc((strlen(stringArr)+1) * sizeof(char));
+       strcpy(newStringArr, stringArr);
+       passwords[i] = newStringArr;
+       i++;
+    }
+    i++;
+    passwords[i] = "\0";
+    fclose(fp);
+    return passwords;
+}
+
+/*
+ * @param char**
+ * @returns int
+ */
+void freeArr(char** input)
+{
+    for(int i =0; input[i] != NULL; i++)
+    {
+        free(input[i]);
+    }
+}
+
+/*
+ * @param char**
+ * @returns int
+ */
+int counter(char** input)
+{
+    int count = 0;
+    while(input[count] != '\0')
+    {
+        count++;
+    }
+    return count;
+}
+
+/*
+ * @param int, char**
+ * @returns int
+ */
+int main(int argc, char *argv[])
+{
+    if (argc < 3) 
+    {
+        printf("Usage: %s hash_file dict_file\n", argv[0]);
+        exit(1);
+    }
+
+    // Read the hash file into an array of strings
+    char **hashes = readFile(argv[1]);
+
+    // Read the dictionary file into an array of strings
+    char **dict = readFile(argv[2]);
     
-    // Make array of hashes from the dictionary array
-    dictHashes = storeHashes(dict);
-    
-     // For each hash, try every entry in the dictionary.
-     // Print the matching dictionary entry.
+    int hashCount = counter(hashes);
+    int dictCount = counter(dict); 
+
+    // For each hash, try every entry in the dictionary.
+    // Print the matching dictionary entry.
     // Need two nested loops.
-    for (int i = 0; i <= numHashes; i++)
-    {	
-    	for (int j = 0; j <= numLines; j++)
-    	{
-    	    if(strcmp(hashes[i], dictHashes[j]) == 0)
+    for(int i = 0; i < hashCount; i++)
+    {
+        for(int j=0; j < dictCount; j++)
+        {
+            if(tryguess(hashes[i], dict[j]))
             {
-    	    	printf("hash is: %s password is: %s\n", hashes[i], dict[j]);
-    			break;
-    		}	
-    	}
+                printf("%s = %s\n", hashes[i], dict[j]); 
+            }
+        }
     }
-    
-    int idx = 0;
-    while(hashes[idx] != NULL)
-    {
-        free(hashes[idx]);
-        idx++;
-    }
-    int idx2 = 0;
-    while(dict[idx2] != NULL)
-    {
-        free(dict[idx2]);
-        idx2++;
-    }
-    int idx3 = 0;
-    while(dictHashes[idx3] != NULL)
-    {
-        free(dictHashes[idx3]);
-        idx3++;
-    }
-    
     free(hashes);
     free(dict);
-    free(dictHashes);
- 
- }
-
-FILE *openfile(char *fname)
-{
-	FILE *f = fopen(fname, "r");
-	if (!f)
-	{
-		printf("Couldn't open %s for reading\n", fname);
-		exit(2);
-	}
-	return f;
 }
-
-// Read in a file and return the array of strings.
-char **readfile(FILE *f, int *pNumLines)
-{
-    // Create inital array of 50 pointers
-    int arrlen = 50;
-    char **arr = (char **)malloc(arrlen * sizeof(char *));
-    
-    // Read in file, expanding array as you go
-    char line[40];
-    int i = 0;
-    while(fscanf(f, "%s", line) != EOF)
-    {
-        arr[i] = malloc((strlen(line)) * sizeof(char));
-        strcpy(arr[i], line);
-        i;
-        //if (i == arrlen)
-    }
-}
-

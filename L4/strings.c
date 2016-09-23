@@ -67,28 +67,7 @@ int stringPosition(char *A, char B)
 	}
 	return -1;
 }
-/*
-int length(char *A)
-{
-	int i = 0;
-	int j = 0;
-	while (A[i] != '\0')
-	{
-		i++;
-		j++;
-	}
 
-	for (int k = 1; k < j + 1; k++)
-	{
-		for (int i = 0; i < j; i++)
-		{
-			A[i] = A[k];
-		}
-	}
-	A[0] = j;
-	return A[0];
-}
-*/
 void copy(char *dest, char *source)
 {
 	int i = 0;
@@ -122,16 +101,7 @@ char * shiftIt(char * s)
     for(int i=0; i < size; ++i)
     {
         j[i] = s[i+1];
-        /*
-        printf("%c",j[i]);
-        printf("\n");
-        
-        printf("%c",s[i]);
-        printf("\n");
-        */
     }
-    //printf("%s",j);
-    //printf("%s",s);
     
     return j;
 }
@@ -150,37 +120,27 @@ void trim(char *s)
      {  
         s = shiftIt(s);
      }
-
-
 }
-
 
 void trimall(char *s)
 {
-
     int max = length(s);
-    //printf(max,"%d"); 
-    //int max = 0;
-		if( s[max] == '\t' ||
+		if(s[max] == '\t' ||
 			s[max] == '\n' ||
 			s[max] == '\r' ||
 			s[max] == ' '
-		)
-			{
-				s[max] = '\0';
+		){
+			s[max] = '\0';
+		}
 
-			}
-
-        if( s[0] == '\t' ||
+   if(s[0] == '\t' ||
 			s[0] == '\n' ||
 			s[0] == '\r' ||
 			s[0] == ' '
-		)
-			{
-                s = shiftIt(s);
-			}
+		){
+      s = shiftIt(s);
+		}
 }
-
 
 int main()
 {
