@@ -61,7 +61,7 @@ char **readFile(char *filename)
     {
        if (i == size)
        {
-           size = size + 10;
+           size = size + 51;
            char **biggerArr = (char **)realloc(passwords, size * sizeof(char *));
            if (biggerArr != NULL) 
            {
@@ -79,7 +79,7 @@ char **readFile(char *filename)
        i++;
     }
     i++;
-    passwords[i] = "\0";
+    passwords[i] = '\0';
     fclose(fp);
     return passwords;
 }
@@ -107,7 +107,7 @@ int counter(char** input)
     {
         count++;
     }
-    return count;
+    return count-1;
 }
 
 /*
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
     // Need two nested loops.
     for(int i = 0; i < hashCount; i++)
     {
-        for(int j=0; j < dictCount; j++)
+        for(int j = 0; j < dictCount; j++)
         {
             if(tryguess(hashes[i], dict[j]))
             {
